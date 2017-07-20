@@ -38,6 +38,7 @@ def fcLayer(din, in_channels, out_channels, name=""):
         activations = relu(fc, name)
         return activations, w, b
 
+'''
 def softmaxLayer(din, in_channels, out_channels, name=""):
     with tf.name_scope('SofmaxLayer'+name):
         w = tf.Variable(tf.truncated_normal([in_channels, out_channels], stddev=.1, name='softmax_weights'+name, dtype=tf.float32))
@@ -47,6 +48,7 @@ def softmaxLayer(din, in_channels, out_channels, name=""):
         result = tf.matmul(din[:,0,:], w)+b
         tf.summary.histogram('SoftmaxLayer'+name, result)
         return result, w, b
+'''
 
 # numActions is the number of actions the agent can take in this game
 # numFramesPerInput is also known as m
@@ -71,8 +73,4 @@ def DQNbyDeepMind(x, numActions, numFramesPerInput=4):
         layers.append(l)
         weights.append(w)
         biases.append(b)
-    l, w, b = softmaxLayer(layers[-1], fcUnits[-1], numActions, 'Q Values')
-    layers.append(l)
-    weights.append(w)
-    biases.append(b)
     return layers, weights, biases
