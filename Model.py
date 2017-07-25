@@ -19,7 +19,7 @@ def convLayer(din, filtSize, strides, in_channels, out_channels, name=""):
             b = tf.Variable(tf.zeros([out_channels]), name=name+'_biases')
             variable_summaries(b)
         with tf.name_scope(name+'_convlution'):
-            convOut = tf.add(tf.nn.conv2d(din, w, stride=[1, strides, strides, 1], padding='SAME', name=name), b)
+            convOut = tf.add(tf.nn.conv2d(din, w, strides=[1, strides, strides, 1], padding='SAME', name=name), b)
             tf.summary.histogram(name+'_convOut', convOut)
         activations = relu(convOut, name)
         return activations, w, b
@@ -52,7 +52,8 @@ def softmaxLayer(din, in_channels, out_channels, name=""):
 
 # numActions is the number of actions the agent can take in this game
 # numFramesPerInput is also known as m
-def DQNbyDeepMind(x, numActions, numFramesPerInput=4):
+def DQNbyDeepMind(numActions, numFramesPerInput=4):
+    x = tf.placeholder("float",[None,84,84,4])
     convFiltSizes = [8, 4, 3]
     convFiltStrides = [4, 2, 1]
     convFilts = [numFramesPerInput, 32, 64, 64]

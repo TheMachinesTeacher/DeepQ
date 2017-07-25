@@ -29,10 +29,10 @@ class DQN:
 		self.epsilon = INITIAL_EPSILON
 		self.actions = actions
 		# init Q network
-		self.stateInput, self.QValue, self.weights, self.biases = DQNbyDeepMind()
+		self.stateInput, self.QValue, self.weights, self.biases = DQNbyDeepMind(self.actions)
 
 		# init Target Q Network
-		self.stateInputT,self.QValueT, self.weightsT, self.biasesT = DQNbyDeepMind()
+		self.stateInputT,self.QValueT, self.weightsT, self.biasesT = DQNbyDeepMind(self.actions)
 
 		self.copyThetaOp = []
 		for i in range(len(self.weights)):
@@ -48,9 +48,9 @@ class DQN:
 		checkpoint = tf.train.get_checkpoint_state("saved_networks")
 		if checkpoint and checkpoint.model_checkpoint_path:
 				self.saver.restore(self.session, checkpoint.model_checkpoint_path)
-				print "Successfully loaded:", checkpoint.model_checkpoint_path
+				print("Successfully loaded:" + checkpoint.model_checkpoint_path)
 		else:
-				print "Could not find old network weights"
+				print("Could not find old network weights")
 
 	def copyTargetQNetwork(self):
 		self.session.run(self.copyThetaOp)
@@ -110,8 +110,7 @@ class DQN:
 		else:
 			state = "train"
 
-		print "TIMESTEP", self.timeStep, "/ STATE", state, \
-		"/ EPSILON", self.epsilon
+		print("TIMESTEP" + str(self.timeStep) + "/ STATE" + state + "/ EPSILON" + str(self.epsilon))
 
 		self.currentState = newState
 		self.timeStep += 1
