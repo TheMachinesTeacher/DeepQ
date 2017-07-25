@@ -68,6 +68,7 @@ def DQNbyDeepMind(numActions, numFramesPerInput=4):
         layers.append(l)
         weights.append(w)
         biases.append(b)
+    layers[-1] = tf.reshape(layers[-1], (lambda x,y: x*y, layers[-1].get_shape().as_list()[1:]))
     for i in range(len(fcUnits)-1):
         name = 'fc'+str(i)
         l, w, b = fcLayer(layers[-1], fcUnits[i], fcUnits[i+1], name)
