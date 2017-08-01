@@ -33,7 +33,7 @@ class MachinePlay(Process):
 	    env = gym.make(self.game)
 	    env = wrappers.Monitor(env, "/tmp/gym-results", force=True)
 	    sess = tf.Session()
-	    actions = env.action_space
+	    actions = env.action_space.n
 	    agent = DQN(actions)
 	    observation, reward, done, info = env.step(0) 
 	    observation = self.preprocess(observation)
